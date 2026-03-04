@@ -1,56 +1,73 @@
+"use client";
+import { Post } from "@/types/post";
+import { Badge } from "./ui/badge";
 import Link from "next/link";
-import Image from "next/image";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 
-interface PostCardProps {
-  title: string;
-  summary: string;
-  link: string;
-  image: string;
-}
+type PostCardProps = {
+  post: Post;
+  isOpen: boolean;
+  onToggle: () => void;
+};
 
-export default function PostCard({
-  title,
-  summary,
-  link,
-  image,
-}: PostCardProps) {
+export default function PostCard({ post, isOpen, onToggle }: PostCardProps) {
   return (
-    <Card className="hover:shadow-xl transition-shadow duration-300 overflow-hidden rounded-xl flex flex-col">
-      {/* Imagem de capa com proporção fixa */}
-      <div className="relative w-full aspect-[3/2] overflow-hidden">
-        <Image
-          src={image}
-          alt={`Capa do post: ${title}`}
-          fill
-          className="object-cover hover:scale-105 transition-transform duration-500"
-        />
-      </div>
-
-      <CardHeader className="pt-4 px-4">
-        <CardTitle className="text-foreground text-lg md:text-xl font-semibold transition-colors duration-300">
-          {title}
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="text-muted-foreground transition-colors duration-300 line-clamp-3 px-4">
-        {summary}
-      </CardContent>
-
-      <CardFooter className="pt-2 px-4">
-        <Link href={link}>
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 transition-all duration-300 w-full">
-            Ler mais
+    <article
+      className="group w-full cursor-pointer border-b border-border py-4 lg:py-6 xl:py-8"
+      onClick={onToggle}
+    >
+      {/* linha do log */}
+      <div className="grid grid-cols-[auto_1fr] gap-x-2">
+        <span className="font-mono text-sm xl:text-base text-accent-foreground">
+          ~$
+        </span>
+        <div className="flex items-center gap-4">
+          <Badge
+            variant={"outline"}
+            className="font-mono text-sm xl:text-base text-accent-foreground"
+          >
+            {post.category}
+          </Badge>
+          <span className="font-mono text-sm xl:text-base text-accent-foreground">
+            {post.publishedAt.toLocaleDateString("pt-BR").replace(/\//g, ".")}
+          </span>
+          <span className="flex-1" />
+          <span className="font-mono text-sm xl:text-base text-accent-foreground">
+            [{post.readingTime}min]
+          </span>
+        </div>
+        <span />
+        <h2 className="font-display text-primary font-bold text-base md:text-lg xl:text-xl mt-4">
+          {post.title}
+        </h2>
+        {/*hover*/}
+        <span />
+        <div
+          className={`max-h-0 overflow-hidden transition-all duration-300 ${isOpen ? "max-h-96" : "max-h-0"} group-hover:max-h-96`}
+        >
+          <div className="flex flex-wrap gap-4 mt-4">
+            {post.tags.map((tag) => (
+              <Badge
+                variant={"outline"}
+                key={tag}
+                className="font-mono text-sm xl:text-base text-accent-foreground"
+              >
+                #{tag}
+              </Badge>
+            ))}
+          </div>
+          <p className="font-sans text-sm md:text-base xl:text-lg text-primary mt-4">
+            {post.summary}
+          </p>
+          <Button
+            variant={"outline"}
+            className="font-mono text-sm xl:text-base text-primary mt-4"
+            asChild
+          >
+            <Link href={`/posts/${post.slug}`}>Veja Log Completo...</Link>
           </Button>
-        </Link>
-      </CardFooter>
-    </Card>
+        </div>
+      </div>
+    </article>
   );
 }

@@ -1,42 +1,29 @@
 "use client";
-
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
 
-export default function ThemeToggle() {
-  const getInitialTheme = () => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("theme");
-      if (stored === "dark") return true;
-      if (stored === "light") return false;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return false;
-  };
-
-  const [isDark, setIsDark] = useState(getInitialTheme);
+export function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setMounted(true);
+  }, []);
 
-  const toggleTheme = () => setIsDark((prev) => !prev);
+  if (!mounted) return null;
 
   return (
     <button
-      onClick={toggleTheme}
-      className="p-2 rounded hover:bg-muted/10 transition"
+      aria-label="Alternar tema"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="hover:scale-110 transition-all"
     >
-      {isDark ? (
-        <Sun className="w-5 h-5 text-foreground" />
+      {theme === "dark" ? (
+        <Sun className="h-5 w-5 text-primary" />
       ) : (
-        <Moon className="w-5 h-5 text-foreground" />
+        <Moon className="h-5 w-5 text-primary" />
       )}
     </button>
   );
