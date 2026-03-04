@@ -13,7 +13,7 @@ type PostCardProps = {
 export default function PostCard({ post, isOpen, onToggle }: PostCardProps) {
   return (
     <article
-      className="group w-full cursor-pointer border-b border-border py-4 lg:py-6 xl:py-8"
+      className="group w-full cursor-pointer border-b border-border py-6 lg:py-8"
       onClick={onToggle}
     >
       {/* linha do log */}
@@ -21,10 +21,30 @@ export default function PostCard({ post, isOpen, onToggle }: PostCardProps) {
         <span className="font-mono text-sm xl:text-base text-accent-foreground">
           ~$
         </span>
+        <div className="w-full flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Badge
+              variant={"outline"}
+              className="font-mono text-sm xl:text-base text-accent-foreground"
+            >
+              {post.category}
+            </Badge>
+            <span className="font-mono text-sm xl:text-base text-accent-foreground">
+              {post.publishedAt.toLocaleDateString("pt-BR").replace(/\//g, ".")}
+            </span>
+          </div>
+
+          <span className="font-mono text-sm xl:text-base text-accent-foreground">
+            [{post.readingTime}min]
+          </span>
+        </div>
+        {/* <span className="font-mono text-sm xl:text-base text-accent-foreground">
+          ~$
+        </span>
         <div className="flex items-center gap-4">
           <Badge
             variant={"outline"}
-            className="font-mono text-sm xl:text-base text-accent-foreground"
+            className="font-mono text-sm xl:text-base text-accent-foreground min-w-0"
           >
             {post.category}
           </Badge>
@@ -32,10 +52,10 @@ export default function PostCard({ post, isOpen, onToggle }: PostCardProps) {
             {post.publishedAt.toLocaleDateString("pt-BR").replace(/\//g, ".")}
           </span>
           <span className="flex-1" />
-          <span className="font-mono text-sm xl:text-base text-accent-foreground">
+          <span className="font-mono text-sm xl:text-base text-accent-foreground shrink-0">
             [{post.readingTime}min]
           </span>
-        </div>
+        </div> */}
         <span />
         <h2 className="font-display text-primary font-bold text-base md:text-lg xl:text-xl mt-4">
           {post.title}

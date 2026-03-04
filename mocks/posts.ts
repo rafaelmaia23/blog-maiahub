@@ -1,7 +1,11 @@
 import { Post } from "@/types/post";
-export async function getMockPosts(): Promise<Post[]> {
+export async function getMockPosts(
+  page: number,
+  perPage: number,
+): Promise<{ posts: Post[]; total: number }> {
   await new Promise((resolve) => setTimeout(resolve, 1500)); // 1.5s de delay
-  return posts;
+  const slicedPosts = posts.slice((page - 1) * perPage, page * perPage);
+  return { posts: slicedPosts, total: posts.length };
 }
 
 const posts: Post[] = [
@@ -91,6 +95,129 @@ const posts: Post[] = [
     publishedAt: new Date("2026-02-28T20:00:00-03:00"),
     updatedAt: new Date("2026-02-28T20:00:00-03:00"),
     readingTime: 11,
+  },
+  {
+    id: "8",
+    slug: "arquitetura-limpa-no-nodejs",
+    title: "Arquitetura Limpa no Node.js",
+    summary:
+      "Como aplicar os princípios de Clean Architecture em APIs Node.js para criar sistemas escaláveis, testáveis e fáceis de manter.",
+    category: "sistema",
+    tags: ["nodejs", "arquitetura", "clean-architecture", "backend"],
+    publishedAt: new Date("2026-03-01T10:00:00-03:00"),
+    updatedAt: new Date("2026-03-01T10:00:00-03:00"),
+    readingTime: 13,
+    featured: true,
+  },
+  {
+    id: "9",
+    slug: "react-renderizacao-e-performance",
+    title: "React: Entendendo Renderização e Performance",
+    summary:
+      "Um mergulho profundo no ciclo de renderização do React, reconciliação, memoização e estratégias reais para evitar renders desnecessários.",
+    category: "sistema",
+    tags: ["react", "performance", "frontend", "renderizacao"],
+    publishedAt: new Date("2026-03-02T19:00:00-03:00"),
+    updatedAt: new Date("2026-03-02T19:00:00-03:00"),
+    readingTime: 9,
+  },
+  {
+    id: "10",
+    slug: "criando-um-rpg-de-turno-com-javascript",
+    title: "Criando um RPG de Turno com JavaScript",
+    summary:
+      "Da modelagem das entidades ao sistema de batalha: construindo a base lógica de um RPG de turno usando JavaScript puro.",
+    category: "simulacao",
+    tags: ["javascript", "rpg", "game-dev", "logica"],
+    publishedAt: new Date("2026-03-03T14:00:00-03:00"),
+    updatedAt: new Date("2026-03-03T14:00:00-03:00"),
+    readingTime: 16,
+    featured: true,
+  },
+  {
+    id: "11",
+    slug: "design-de-sistemas-para-iniciantes",
+    title: "Design de Sistemas para Iniciantes",
+    summary:
+      "Conceitos fundamentais de escalabilidade, balanceamento de carga, filas e cache explicados de forma prática para desenvolvedores.",
+    category: "sistema",
+    tags: ["system-design", "backend", "escala", "infraestrutura"],
+    publishedAt: new Date("2026-03-04T09:30:00-03:00"),
+    updatedAt: new Date("2026-03-04T09:30:00-03:00"),
+    readingTime: 18,
+  },
+  {
+    id: "12",
+    slug: "fotografia-como-forma-de-observar-o-mundo",
+    title: "Fotografia como Forma de Observar o Mundo",
+    summary:
+      "Mais do que técnica: como a fotografia pode treinar sua percepção, atenção aos detalhes e senso estético no cotidiano.",
+    category: "log",
+    tags: ["fotografia", "criatividade", "arte", "observacao"],
+    publishedAt: new Date("2026-03-05T17:00:00-03:00"),
+    updatedAt: new Date("2026-03-05T17:00:00-03:00"),
+    readingTime: 7,
+  },
+  {
+    id: "13",
+    slug: "dark-souls-e-a-filosofia-da-dificuldade",
+    title: "Dark Souls e a Filosofia da Dificuldade",
+    summary:
+      "Por que falhar em Dark Souls é parte do aprendizado — e o que isso ensina sobre esforço, paciência e recompensa.",
+    category: "simulacao",
+    tags: ["dark-souls", "fromsoft", "filosofia", "jogos"],
+    publishedAt: new Date("2026-03-06T20:00:00-03:00"),
+    updatedAt: new Date("2026-03-06T20:00:00-03:00"),
+    readingTime: 10,
+  },
+  {
+    id: "14",
+    slug: "inteligencia-artificial-e-criatividade-humana",
+    title: "Inteligência Artificial e Criatividade Humana",
+    summary:
+      "A IA substitui ou amplia a criatividade? Uma análise sobre colaboração entre humanos e máquinas na arte e na programação.",
+    category: "transmissao",
+    tags: ["ia", "criatividade", "tecnologia", "futuro"],
+    publishedAt: new Date("2026-03-07T18:30:00-03:00"),
+    updatedAt: new Date("2026-03-07T18:30:00-03:00"),
+    readingTime: 12,
+    featured: true,
+  },
+  {
+    id: "15",
+    slug: "minimalismo-digital-e-foco-profundo",
+    title: "Minimalismo Digital e Foco Profundo",
+    summary:
+      "Como reduzir distrações digitais, organizar seu ambiente de trabalho e recuperar a capacidade de concentração prolongada.",
+    category: "log",
+    tags: ["produtividade", "foco", "minimalismo", "carreira"],
+    publishedAt: new Date("2026-03-08T08:00:00-03:00"),
+    updatedAt: new Date("2026-03-08T08:00:00-03:00"),
+    readingTime: 8,
+  },
+  {
+    id: "16",
+    slug: "explorando-o-espaco-com-simulacoes",
+    title: "Explorando o Espaço com Simulações",
+    summary:
+      "Como motores físicos e simulações computacionais ajudam a entender órbitas, gravidade e missões espaciais complexas.",
+    category: "vazio",
+    tags: ["espaco", "simulacao", "fisica", "astronomia"],
+    publishedAt: new Date("2026-03-09T21:00:00-03:00"),
+    updatedAt: new Date("2026-03-09T21:00:00-03:00"),
+    readingTime: 14,
+  },
+  {
+    id: "17",
+    slug: "microinteracoes-que-melhoram-ux",
+    title: "Microinterações que Melhoram a Experiência do Usuário",
+    summary:
+      "Pequenos detalhes que fazem grande diferença: animações sutis, feedback visual e tempo de resposta na construção de interfaces modernas.",
+    category: "sistema",
+    tags: ["ux", "ui", "frontend", "design"],
+    publishedAt: new Date("2026-03-10T15:00:00-03:00"),
+    updatedAt: new Date("2026-03-10T15:00:00-03:00"),
+    readingTime: 9,
   },
 ];
 

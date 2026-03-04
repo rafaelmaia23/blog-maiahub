@@ -56,7 +56,7 @@ export default function Header() {
         </div>
 
         <nav
-          className={`absolute top-full left-4 right-4 mt-4 z-50 bg-background shadow-2xl border border-border px-4 transition-all duration-300 ease-out md:hidden
+          className={`absolute top-full left-4 right-4 mt-4 z-50 bg-background shadow-2xl border border-border px-4 transition-all duration-300 ease-out md:hidden 
           ${
             isOpen
               ? "opacity-100 translate-y-0 pointer-events-auto"
